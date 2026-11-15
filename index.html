@@ -61,6 +61,9 @@ details[open] summary::after{content:"−"}
 .about-row li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;padding:4px 0}
 .about-row li span:last-child{white-space:nowrap}
 @media(max-width:520px){.about-row{grid-template-columns:1fr;gap:7px}.about-row li{display:grid}}
+.about-row .about-publications li{display:block;padding:0}
+.about-row .about-publications li+li{margin-top:12px;padding-top:12px;border-top:1px solid #ddd}
+.about-row .about-entry-type{font:500 12px/1.35 var(--mono);color:#555;margin-bottom:4px}
 footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
 .footer-head,.footer-end{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
 .footer-name{margin:70px 0 16px;font:600 13.5vw/.76 Arial,sans-serif;letter-spacing:-.09em;white-space:nowrap}
@@ -111,12 +114,29 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
           </div>
         </div>
         <div class="about-row">
-          <h3>Research &amp; Exhibition</h3>
-          <ul>
-            <li><span>Adaptive Reuse of Urban Micro-Logistics Facilities</span><span>Master’s Thesis · 2024</span></li>
-            <li><span>Low-Rise Area Activation in Urban Redevelopment — Marunouchi, Tokyo</span><span>Conference Presentation · 2023</span></li>
-            <li><span>Layered Hub — A BIM-Based Urban Mobility Hub</span><span>Technical Article · 2023</span></li>
-            <li><span><em>VOIDSCAPE</em> — Seoul Biennale of Architecture and Urbanism</span><span>Exhibition · 2023</span></li>
+          <h3>Research &amp; Publications</h3>
+          <ul class="about-publications">
+            <li>
+              <p class="about-entry-type">Master’s Thesis · 2024</p>
+              <p>Study on Architectural Strategies for Utilizing Urban Logistics Facilities</p>
+            </li>
+            <li>
+              <p class="about-entry-type">Conference Presentation · 2023</p>
+              <p>Low-Rise Area Activation in Urban Redevelopment: A Case Study of Marunouchi Building in Tokyo</p>
+            </li>
+            <li>
+              <p class="about-entry-type">Technical Article · 2023</p>
+              <p>Layered Hub - A BIM Based Urban Mobility Hub Design Proposal</p>
+            </li>
+          </ul>
+        </div>
+        <div class="about-row">
+          <h3>Exhibition</h3>
+          <ul class="about-publications">
+            <li>
+              <p class="about-entry-type">Seoul Biennale of Architecture and Urbanism · 2023</p>
+              <p><em>VOIDSCAPE</em></p>
+            </li>
           </ul>
         </div>
         <div class="about-row">
@@ -125,10 +145,10 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
             <li><span>MWU Unity Award</span><span>1st Prize · 2023</span></li>
             <li><span>DOCOMOMO Korea Urban Design Competition</span><span>2nd Prize · 2023</span></li>
             <li><span>YAC Data Landscape</span><span>Honorable Mention · 2023</span></li>
-            <li><span>Gyeonggi Architecture Festival</span><span>Special Award · 2022</span></li>
+            <li><span>Gyeonggi Architecture Competition</span><span>Special Award · 2022</span></li>
             <li><span>BIM Awards Korea</span><span>Grand Prize · 2022</span></li>
             <li><span>SAMOO Design Workshop (SDW)</span><span>Top Prize · 2019</span></li>
-            <li><span>Jeonglim Student Architecture Award</span><span>Selected Entry · 2019</span></li>
+            <li><span>Jeonglim Student Architecture Award</span><span>Special Selection · 2019</span></li>
             <li><span>International Youth Spatial Design Competition</span><span>Special Selection · 2018</span></li>
             <li><span>SH Youth Architecture Competition</span><span>3rd Prize · 2018</span></li>
             <li><span>Seoul Social Housing Competition</span><span>2nd Prize · 2017</span></li>
