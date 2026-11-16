@@ -34,12 +34,10 @@ figure{margin:0}
 .tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
 .tile[href="#sewage-symphony"] img{object-position:65% center}
 .tile:hover img,.tile:focus-visible img{transform:scale(1.045)}
-.tile-word{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;background:rgba(0,0,0,.32);color:#fff;font:600 clamp(24px,4.5vw,72px)/1 Arial,sans-serif;letter-spacing:-.055em;opacity:0}
-.tile-word span{transform:translateY(16px)}
-.tile.is-revealing .tile-word{animation:tile-word-reveal 280ms ease-out forwards}
-.tile.is-revealing .tile-word span{animation:tile-word-rise 280ms ease-out forwards}
-@keyframes tile-word-reveal{to{opacity:1}}
-@keyframes tile-word-rise{to{transform:translateY(0)}}
+.tile-word{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;background:rgba(0,0,0,.32);color:#fff;font:600 clamp(24px,4.5vw,72px)/1 Arial,sans-serif;letter-spacing:-.055em;opacity:0;transition:opacity 280ms ease-out}
+.tile-word span{transform:translateY(16px);transition:transform 280ms ease-out}
+@media(hover:hover) and (pointer:fine){.tile:hover .tile-word{opacity:1}.tile:hover .tile-word span{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.tile-word,.tile-word span{transition:none}.tile-word span{transform:none}}
 .tile .view{position:absolute;inset:12px 12px auto auto;background:var(--paper);padding:5px;opacity:0}
 .tile:is(:hover,:focus-visible) .view{opacity:1}
 .placeholder{display:grid;place-items:center;padding:16px;text-align:center;font:500 clamp(20px,3vw,52px)/.95 Arial,sans-serif;letter-spacing:-.055em;text-transform:uppercase}
@@ -201,18 +199,6 @@ document.querySelector("#projects").innerHTML = projects.map((project, i) => `
   ${!project.gallery ? "" : `<div class="plates">${project.gallery.map(n => `<img loading="lazy" src="${plates[n].src}" alt="${plates[n].alt}">`).join("")}</div>`}</div>
   </details>
 `).join("");
-
-const animatedCard = document.querySelector('#grid .tile[href="#sewage-symphony"]');
-animatedCard.addEventListener("click", event => {
-  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  event.preventDefault();
-  if (animatedCard.classList.contains("is-revealing")) return;
-  animatedCard.classList.add("is-revealing");
-  setTimeout(() => {
-    animatedCard.classList.remove("is-revealing");
-    window.location.assign(animatedCard.href);
-  }, 340);
-});
 
 function openProjectFromHash(){
   const projectHash = location.hash === "#flooding-island" ? "#banishing-island" : location.hash;
