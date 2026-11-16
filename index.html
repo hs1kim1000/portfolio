@@ -49,7 +49,8 @@ figcaption span:last-child{text-align:right}
 .works-index a:nth-child(10n + 1){border-top:1px solid #aaa}
 .works-index a:is(:hover,:focus-visible) span:last-child{text-decoration:underline}
 #projects details{border-top:1px solid #aaa;margin-top:30px}
-#projects details:not([open]):not(:target){display:none}
+#projects details:not([open]){display:none}
+#projects summary{grid-template-columns:minmax(0,1fr) auto}
 @media(max-width:760px){.works-index{grid-auto-flow:row;grid-template-rows:none;grid-auto-rows:minmax(48px,auto)}.works-index a:nth-child(n + 2){border-top:0}}
 .projects details:last-child{border-bottom:1px solid #aaa}
 summary{padding:18px 0;cursor:pointer;list-style:none;display:grid;grid-template-columns:9% 1fr auto;gap:8px}
@@ -237,8 +238,8 @@ document.querySelector("#works-index").innerHTML = projects.map((project, i) => 
   <a class="mono" href="#${project.id}"><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></a>
 `).join("");
 
-document.querySelector("#projects").innerHTML = projects.map((project, i) => `
-  <details id="${project.id}"><summary><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></summary>
+document.querySelector("#projects").innerHTML = projects.map(project => `
+  <details id="${project.id}"><summary><span>${project.name}</span></summary>
   <div class="project-body">${project.description ? `<p>${project.description}</p>` : ""}
   ${project.video ? `<video controls playsinline preload="metadata" poster="${project.poster || plates[project.image].src}" aria-label="${project.name} studio video"><source src="${project.video}" type="video/mp4"></video>` : ""}
   ${!project.gallery ? "" : `<div class="plates">${project.gallery.map(n => `<img loading="lazy" src="${plates[n].src}" alt="${plates[n].alt}">`).join("")}</div>`}</div>
