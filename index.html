@@ -44,15 +44,13 @@ figure{margin:0}
 .placeholder{display:grid;place-items:center;padding:16px;text-align:center;font:500 clamp(20px,3vw,52px)/.95 Arial,sans-serif;letter-spacing:-.055em;text-transform:uppercase}
 figcaption{display:flex;justify-content:space-between;gap:8px;padding:10px}
 figcaption span:last-child{text-align:right}
-.works-index{display:grid;grid-auto-flow:column;grid-template-rows:repeat(10,minmax(48px,auto));grid-auto-columns:minmax(0,1fr);column-gap:clamp(18px,4vw,72px)}
-.works-index a{display:grid;grid-template-columns:4ch minmax(0,1fr);gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #aaa}
-.works-index a:nth-child(10n + 1){border-top:1px solid #aaa}
-.works-index a:is(:hover,:focus-visible) span:last-child{text-decoration:underline}
-#projects details{border-top:1px solid #aaa;margin-top:30px}
-#projects details:not([open]){display:none}
-#projects summary{grid-template-columns:minmax(0,1fr) auto}
-@media(max-width:760px){.works-index{grid-auto-flow:row;grid-template-rows:none;grid-auto-rows:minmax(48px,auto)}.works-index a:nth-child(n + 2){border-top:0}}
-.projects details:last-child{border-bottom:1px solid #aaa}
+.works-index{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:start;column-gap:clamp(18px,4vw,72px)}
+.works-column{min-width:0;container-type:inline-size;border-top:1px solid #aaa}
+.works-column details{border-bottom:1px solid #aaa}
+.works-column summary{grid-template-columns:4ch minmax(0,1fr) auto;align-items:center;min-height:48px;gap:12px;padding:12px 0}
+.works-column summary:is(:hover,:focus-visible) span:last-child{text-decoration:underline}
+@container(max-width:640px){.works-column .project-body{grid-template-columns:1fr}}
+@media(max-width:760px){.works-index{grid-auto-flow:row}.works-column:not(:first-child){border-top:0}}
 summary{padding:18px 0;cursor:pointer;list-style:none;display:grid;grid-template-columns:9% 1fr auto;gap:8px}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+"}
@@ -109,8 +107,7 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
   </section>
   <section class="projects" id="works">
     <div class="heading"><h2>Works<sup><span data-project-count>[11]</span></sup></h2></div>
-    <nav class="works-index" id="works-index" aria-label="Project index"></nav>
-    <div id="projects"></div>
+    <div id="projects" class="works-index"></div>
   </section>
   <section class="about" id="about">
     <h2>About</h2>
@@ -234,24 +231,25 @@ for (const tile of projectGrid.querySelectorAll(".tile")) {
   tile.addEventListener("pointerleave", () => tile.classList.remove("has-view-pointer"));
 }
 
-document.querySelector("#works-index").innerHTML = projects.map((project, i) => `
-  <a class="mono" href="#${project.id}"><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></a>
-`).join("");
-
-document.querySelector("#projects").innerHTML = projects.map(project => `
-  <details id="${project.id}"><summary><span>${project.name}</span></summary>
+const worksRows = projects.map((project, i) => `
+  <details id="${project.id}"><summary><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></summary>
   <div class="project-body">${project.description ? `<p>${project.description}</p>` : ""}
   ${project.video ? `<video controls playsinline preload="metadata" poster="${project.poster || plates[project.image].src}" aria-label="${project.name} studio video"><source src="${project.video}" type="video/mp4"></video>` : ""}
   ${!project.gallery ? "" : `<div class="plates">${project.gallery.map(n => `<img loading="lazy" src="${plates[n].src}" alt="${plates[n].alt}">`).join("")}</div>`}</div>
   </details>
-`).join("");
+`);
+const worksColumns = [];
+for (let start = 0; start < worksRows.length; start += 10) {
+  worksColumns.push(`<div class="works-column">${worksRows.slice(start, start + 10).join("")}</div>`);
+}
+document.querySelector("#projects").innerHTML = worksColumns.join("");
 
 function openProjectFromHash(){
   const projectHash = location.hash === "#flooding-island" ? "#banishing-island" : location.hash;
   const project = projects.find(item => "#" + item.id === projectHash);
   if (project) document.getElementById(project.id).open = true;
 }
-for (const link of document.querySelectorAll("#grid .tile, #works-index a")) {
+for (const link of document.querySelectorAll("#grid .tile")) {
   link.addEventListener("click", event => {
     if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     document.getElementById(link.hash.slice(1)).open = true;
