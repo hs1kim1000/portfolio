@@ -44,7 +44,13 @@ figure{margin:0}
 .placeholder{display:grid;place-items:center;padding:16px;text-align:center;font:500 clamp(20px,3vw,52px)/.95 Arial,sans-serif;letter-spacing:-.055em;text-transform:uppercase}
 figcaption{display:flex;justify-content:space-between;gap:8px;padding:10px}
 figcaption span:last-child{text-align:right}
-.projects details{border-top:1px solid #aaa}
+.works-index{display:grid;grid-auto-flow:column;grid-template-rows:repeat(10,minmax(48px,auto));grid-auto-columns:minmax(0,1fr);column-gap:clamp(18px,4vw,72px)}
+.works-index a{display:grid;grid-template-columns:4ch minmax(0,1fr);gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #aaa}
+.works-index a:nth-child(10n + 1){border-top:1px solid #aaa}
+.works-index a:is(:hover,:focus-visible) span:last-child{text-decoration:underline}
+#projects details{border-top:1px solid #aaa;margin-top:30px}
+#projects details:not([open]):not(:target){display:none}
+@media(max-width:760px){.works-index{grid-auto-flow:row;grid-template-rows:none;grid-auto-rows:minmax(48px,auto)}.works-index a:nth-child(n + 2){border-top:0}}
 .projects details:last-child{border-bottom:1px solid #aaa}
 summary{padding:18px 0;cursor:pointer;list-style:none;display:grid;grid-template-columns:9% 1fr auto;gap:8px}
 summary::-webkit-details-marker{display:none}
@@ -102,6 +108,7 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
   </section>
   <section class="projects" id="works">
     <div class="heading"><h2>Works<sup><span data-project-count>[11]</span></sup></h2></div>
+    <nav class="works-index" id="works-index" aria-label="Project index"></nav>
     <div id="projects"></div>
   </section>
   <section class="about" id="about">
@@ -186,7 +193,7 @@ const projects = [
   { id:"banishing-island", coverWord:"GAME", name:"Banishing Island", ratio:"1365/2048", image:29, poster:"images/banishing-island-poster.jpg", description:"UD Summer Studio", video:"videos/flooding-island.mp4" },
   { id:"five-sense", coverWord:"SENSE", name:"FIVE SENSE", ratio:"4/3", image:28, gallery:[28,27], description:"This model was made by hand from wood, board, and paper to test and express architectural design ideas." },
   { id:"multi-dome", name:"Multi Dome", coverWord:"DOME", ratio:"1/1", image:35, gallery:[30,31,32,33], description:"This model was made by hand from wood, board, and paper to test and express architectural design ideas." },
-  { id:"relay-school", name:"Relay School", coverWord:"SCHOOL", ratio:"2048/1365", image:36, gallery:[36,37,38,39], description:"This model was made by hand from wood, board, and paper to test and express architectural design ideas." }
+  { id:"relay-school", name:"Relay School", coverWord:"SCHOOL", ratio:"4/3", image:38, gallery:[36,37,38,39], description:"This model was made by hand from wood, board, and paper to test and express architectural design ideas." }
 ];
 
 const projectCount = String(projects.length).padStart(2, "0");
@@ -226,6 +233,10 @@ for (const tile of projectGrid.querySelectorAll(".tile")) {
   tile.addEventListener("pointerleave", () => tile.classList.remove("has-view-pointer"));
 }
 
+document.querySelector("#works-index").innerHTML = projects.map((project, i) => `
+  <a class="mono" href="#${project.id}"><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></a>
+`).join("");
+
 document.querySelector("#projects").innerHTML = projects.map((project, i) => `
   <details id="${project.id}"><summary><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></summary>
   <div class="project-body">${project.description ? `<p>${project.description}</p>` : ""}
@@ -238,6 +249,12 @@ function openProjectFromHash(){
   const projectHash = location.hash === "#flooding-island" ? "#banishing-island" : location.hash;
   const project = projects.find(item => "#" + item.id === projectHash);
   if (project) document.getElementById(project.id).open = true;
+}
+for (const link of document.querySelectorAll("#grid .tile, #works-index a")) {
+  link.addEventListener("click", event => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    document.getElementById(link.hash.slice(1)).open = true;
+  });
 }
 window.addEventListener("hashchange", openProjectFromHash);
 openProjectFromHash();
