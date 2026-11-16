@@ -34,6 +34,12 @@ figure{margin:0}
 .tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
 .tile[href="#sewage-symphony"] img{object-position:65% center}
 .tile:hover img,.tile:focus-visible img{transform:scale(1.045)}
+.tile-word{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;background:rgba(0,0,0,.32);color:#fff;font:600 clamp(24px,4.5vw,72px)/1 Arial,sans-serif;letter-spacing:-.055em;opacity:0}
+.tile-word span{transform:translateY(16px)}
+.tile.is-revealing .tile-word{animation:tile-word-reveal 280ms ease-out forwards}
+.tile.is-revealing .tile-word span{animation:tile-word-rise 280ms ease-out forwards}
+@keyframes tile-word-reveal{to{opacity:1}}
+@keyframes tile-word-rise{to{transform:translateY(0)}}
 .tile .view{position:absolute;inset:12px 12px auto auto;background:var(--paper);padding:5px;opacity:0}
 .tile:is(:hover,:focus-visible) .view{opacity:1}
 .placeholder{display:grid;place-items:center;padding:16px;text-align:center;font:500 clamp(20px,3vw,52px)/.95 Arial,sans-serif;letter-spacing:-.055em;text-transform:uppercase}
@@ -172,7 +178,7 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
 const plates = [{"alt":"Aerial rendering of Breathing Infrastructure above the Queens rail corridor","src":"images/breathing-aerial.webp"},{"alt":"Street-facing exterior rendering from the rail corridor","src":"images/breathing-street.webp"},{"alt":"Shared kitchen and dining room","src":"images/breathing-kitchen.webp"},{"alt":"Elevated community walkway","src":"images/breathing-walkway.webp"},{"alt":"Planted community room","src":"images/breathing-community-room.webp"},{"alt":"Architectural section through the filtration structure","src":"images/breathing-section.webp"},{"alt":"Vertical circulation and planting plans","src":"images/breathing-plans.webp"},{"alt":"Axonometric drawing of the rail corridor","src":"images/breathing-corridor-axon.webp"},{"alt":"Axonometric drawing of workshops along the tracks","src":"images/breathing-workshops-axon.webp"},{"alt":"Axonometric drawing of the proposed intervention","src":"images/breathing-intervention-axon.webp"},{"alt":"Close-up of an architectural model with colorful rooftop structures","src":"images/model-rooftop-closeup.webp"},{"alt":"Full view of the architectural model on a display stand","src":"images/model-display-stand.webp"},{"alt":"Overhead view of the scale model and its surrounding blocks","src":"images/model-overhead.webp"},{"alt":"Oblique view of the scale model showing its stepped roofs","src":"images/model-oblique.webp"},{"alt":"Close-up of the colorful stairs and slides on the roof","src":"images/model-rooftop-stairs.webp"},{"alt":"Hand-drawn second-floor plan","src":"images/plan-second-floor.webp"},{"alt":"Hand-drawn fourth-floor plan","src":"images/plan-fourth-floor.webp"},{"alt":"Hand-drawn fifth-floor plan","src":"images/plan-fifth-floor.webp"},{"alt":"Data Centre sectional model showing stacked floors and timber roof framing","src":"images/data-centre-framing.webp"},{"alt":"Data Centre sectional model showing a planted courtyard beneath a pitched roof","src":"images/data-centre-courtyard.webp"},{"alt":"Unveil Memorial scale model with its designer behind the display","src":"images/unveil-model.jpg"},{"alt":"Two sectional models of Unveil Memorial and its waterfront site","src":"images/unveil-site.jpg"},{"alt":"Overhead view of players around the Banishing Island board game","src":"images/banishing-island-poster.jpg"}];
 const projects = [
   { id:"breathing-infrastructure", name:"Breathing Infrastructure", ratio:"4/5", image:0, gallery:[0,1,2,3,4,5], description:"An adaptive reuse proposal for rail infrastructure in Queens that pairs air filtration with shared spaces for the immigrant-run repair businesses below." },
-  { id:"sewage-symphony", name:"Sewage Symphony", ratio:"4/5", image:10, gallery:[10,11], description:"An adaptive reuse proposal that reimagines a wastewater treatment plant as a performance venue." },
+  { id:"sewage-symphony", name:"Sewage Symphony", coverWord:"FACTORY", ratio:"4/5", image:10, gallery:[10,11], description:"An adaptive reuse proposal that reimagines a wastewater treatment plant as a performance venue." },
   { id:"maze", name:"MAZE × MAZE", ratio:"16/10", tone:"#d9d6cf", description:"A resident center on Jeju that uses the spatial logic of a maze to separate and reconnect community programs." },
   { id:"layered-factory", name:"Layered Factory", ratio:"4/2.75", image:12, gallery:[12, 13, 14, 15, 16, 17], description:"Model photographs and hand-drawn plans show the stepped building volumes, roof connections, and the spaces between them." },
   { id:"data-centre", name:"Data Centre", ratio:"2/3", image:18, gallery:[18,19], description:"A proposal to reuse a former communications base as a data center and redirect waste heat to support a seed vault." },
@@ -183,6 +189,7 @@ const projects = [
 document.querySelector("#grid").innerHTML = projects.map((project, i) => `
   <figure><a class="tile ${project.image === undefined ? "placeholder" : ""}" style="--ratio:${project.ratio};--tone:${project.tone || "#eee"};color:${project.ink || "#111"}" href="#${project.id}" aria-label="View ${project.name}">
     ${project.image === undefined ? project.name : `<img alt="${plates[project.image].alt}" src="${plates[project.image].src}">`}
+    ${project.coverWord ? `<span class="tile-word" aria-hidden="true"><span>${project.coverWord}</span></span>` : ""}
     <span class="view mono" style="color:#111">[ View ]</span>
   </a><figcaption><span>${String(i + 1).padStart(3, "0")}</span><span>${project.name}</span></figcaption></figure>
 `).join("");
@@ -194,6 +201,18 @@ document.querySelector("#projects").innerHTML = projects.map((project, i) => `
   ${!project.gallery ? "" : `<div class="plates">${project.gallery.map(n => `<img loading="lazy" src="${plates[n].src}" alt="${plates[n].alt}">`).join("")}</div>`}</div>
   </details>
 `).join("");
+
+const animatedCard = document.querySelector('#grid .tile[href="#sewage-symphony"]');
+animatedCard.addEventListener("click", event => {
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  event.preventDefault();
+  if (animatedCard.classList.contains("is-revealing")) return;
+  animatedCard.classList.add("is-revealing");
+  setTimeout(() => {
+    animatedCard.classList.remove("is-revealing");
+    window.location.assign(animatedCard.href);
+  }, 340);
+});
 
 function openProjectFromHash(){
   const projectHash = location.hash === "#flooding-island" ? "#banishing-island" : location.hash;
