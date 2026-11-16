@@ -48,6 +48,7 @@ details[open] summary::after{content:"−"}
 .project-body{display:grid;grid-template-columns:1fr 2fr;gap:20px;padding:16px 0 32px}
 .project-body p{margin:0;max-width:40ch;font:400 clamp(16px,2vw,22px)/1.35 Arial,sans-serif}
 .plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.project-body > .plates:only-child{grid-column:1/-1}
 .plates img{width:100%;height:auto;display:block}
 .about{border-top:1px solid #aaa;display:grid;grid-template-columns:30% 1fr;gap:20px}
 .about-content{max-width:1050px;min-width:0}
@@ -77,10 +78,10 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
 <body id="home">
 <header>
   <a class="wordmark" href="#home">HARRISON KIM</a>
-  <nav class="nav-group desktop-nav" aria-label="Portfolio"><a href="#home">Home</a><a href="#works">Works [05]</a></nav>
+  <nav class="nav-group desktop-nav" aria-label="Portfolio"><a href="#home">Home</a><a href="#works">Works [06]</a></nav>
   <nav class="nav-group desktop-nav" aria-label="Information"><a href="#about">About</a><a href="#contact">Contact</a></nav>
   <div class="local"><time id="clock">New York Time</time><span>New York, NY</span></div>
-  <details class="mobile-menu"><summary>[ Menu ]</summary><nav aria-label="Mobile"><a href="#home">Home</a><a href="#works">Works [05]</a><a href="#about">About</a><a href="#contact">Contact</a></nav></details>
+  <details class="mobile-menu"><summary>[ Menu ]</summary><nav aria-label="Mobile"><a href="#home">Home</a><a href="#works">Works [06]</a><a href="#about">About</a><a href="#contact">Contact</a></nav></details>
 </header>
 <main>
   <section class="hero" aria-label="Selected work introduction">
@@ -90,11 +91,11 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
     <a class="mono jump" href="#latest">[ Scroll down ]</a>
   </section>
   <section id="latest">
-    <div class="heading"><h2>Latest<sup>[05]</sup></h2><a class="mono" href="#works">[ View all ]</a></div>
+    <div class="heading"><h2>Latest<sup>[06]</sup></h2><a class="mono" href="#works">[ View all ]</a></div>
     <div class="grid" id="grid"></div>
   </section>
   <section class="projects" id="works">
-    <div class="heading"><h2>Works<sup>[05]</sup></h2></div>
+    <div class="heading"><h2>Works<sup>[06]</sup></h2></div>
     <div id="projects"></div>
   </section>
   <section class="about" id="about">
@@ -167,13 +168,14 @@ footer{background:#111;color:#fff;padding:55px var(--edge) 14px}
   <div class="footer-end"><span>© 2026 Harrison Kim</span><a href="#home">[ Back to top ]</a></div>
 </footer>
 <script>
-const plates = [{"alt": "Aerial rendering of Breathing Infrastructure above the Queens rail corridor", "src": "images/breathing-aerial.webp"}, {"alt": "Street-facing exterior rendering from the rail corridor", "src": "images/breathing-street.webp"}, {"alt": "Shared kitchen and dining room", "src": "images/breathing-kitchen.webp"}, {"alt": "Elevated community walkway", "src": "images/breathing-walkway.webp"}, {"alt": "Planted community room", "src": "images/breathing-community-room.webp"}, {"alt": "Architectural section through the filtration structure", "src": "images/breathing-section.webp"}, {"alt": "Vertical circulation and planting plans", "src": "images/breathing-plans.webp"}, {"alt": "Axonometric drawing of the rail corridor", "src": "images/breathing-corridor-axon.webp"}, {"alt": "Axonometric drawing of workshops along the tracks", "src": "images/breathing-workshops-axon.webp"}, {"alt": "Axonometric drawing of the proposed intervention", "src": "images/breathing-intervention-axon.webp"}, {"alt": "Close-up of an architectural model with colorful rooftop structures", "src": "images/model-rooftop-closeup.webp"}, {"alt": "Full view of the architectural model on a display stand", "src": "images/model-display-stand.webp"}, {"alt": "Overhead view of the scale model and its surrounding blocks", "src": "images/model-overhead.webp"}, {"alt": "Oblique view of the scale model showing its stepped roofs", "src": "images/model-oblique.webp"}, {"alt": "Close-up of the colorful stairs and slides on the roof", "src": "images/model-rooftop-stairs.webp"}, {"alt": "Hand-drawn second-floor plan", "src": "images/plan-second-floor.webp"}, {"alt": "Hand-drawn fourth-floor plan", "src": "images/plan-fourth-floor.webp"}, {"alt": "Hand-drawn fifth-floor plan", "src": "images/plan-fifth-floor.webp"}, {"alt": "Data Centre sectional model showing stacked floors and timber roof framing", "src": "images/data-centre-framing.webp"}, {"alt": "Data Centre sectional model showing a planted courtyard beneath a pitched roof", "src": "images/data-centre-courtyard.webp"}];
+const plates = [{"alt":"Aerial rendering of Breathing Infrastructure above the Queens rail corridor","src":"images/breathing-aerial.webp"},{"alt":"Street-facing exterior rendering from the rail corridor","src":"images/breathing-street.webp"},{"alt":"Shared kitchen and dining room","src":"images/breathing-kitchen.webp"},{"alt":"Elevated community walkway","src":"images/breathing-walkway.webp"},{"alt":"Planted community room","src":"images/breathing-community-room.webp"},{"alt":"Architectural section through the filtration structure","src":"images/breathing-section.webp"},{"alt":"Vertical circulation and planting plans","src":"images/breathing-plans.webp"},{"alt":"Axonometric drawing of the rail corridor","src":"images/breathing-corridor-axon.webp"},{"alt":"Axonometric drawing of workshops along the tracks","src":"images/breathing-workshops-axon.webp"},{"alt":"Axonometric drawing of the proposed intervention","src":"images/breathing-intervention-axon.webp"},{"alt":"Close-up of an architectural model with colorful rooftop structures","src":"images/model-rooftop-closeup.webp"},{"alt":"Full view of the architectural model on a display stand","src":"images/model-display-stand.webp"},{"alt":"Overhead view of the scale model and its surrounding blocks","src":"images/model-overhead.webp"},{"alt":"Oblique view of the scale model showing its stepped roofs","src":"images/model-oblique.webp"},{"alt":"Close-up of the colorful stairs and slides on the roof","src":"images/model-rooftop-stairs.webp"},{"alt":"Hand-drawn second-floor plan","src":"images/plan-second-floor.webp"},{"alt":"Hand-drawn fourth-floor plan","src":"images/plan-fourth-floor.webp"},{"alt":"Hand-drawn fifth-floor plan","src":"images/plan-fifth-floor.webp"},{"alt":"Data Centre sectional model showing stacked floors and timber roof framing","src":"images/data-centre-framing.webp"},{"alt":"Data Centre sectional model showing a planted courtyard beneath a pitched roof","src":"images/data-centre-courtyard.webp"},{"alt":"Unveil Memorial scale model with its designer behind the display","src":"images/unveil-model.jpg"},{"alt":"Two sectional models of Unveil Memorial and its waterfront site","src":"images/unveil-site.jpg"}];
 const projects = [
   { id:"breathing-infrastructure", name:"Breathing Infrastructure", ratio:"4/5", image:0, gallery:[0,1,2,3,4,5], description:"An adaptive reuse proposal for rail infrastructure in Queens that pairs air filtration with shared spaces for the immigrant-run repair businesses below." },
   { id:"sewage-symphony", name:"Sewage Symphony", ratio:"4/5", image:10, gallery:[10,11], description:"An adaptive reuse proposal that reimagines a wastewater treatment plant as a performance venue." },
   { id:"maze", name:"MAZE × MAZE", ratio:"16/10", tone:"#d9d6cf", description:"A resident center on Jeju that uses the spatial logic of a maze to separate and reconnect community programs." },
   { id:"layered-factory", name:"Layered Factory", ratio:"4/2.75", image:12, gallery:[12, 13, 14, 15, 16, 17], description:"Model photographs and hand-drawn plans show the stepped building volumes, roof connections, and the spaces between them." },
-  { id:"data-centre", name:"Data Centre", ratio:"2/3", image:18, gallery:[18,19], description:"A proposal to reuse a former communications base as a data center and redirect waste heat to support a seed vault." }
+  { id:"data-centre", name:"Data Centre", ratio:"2/3", image:18, gallery:[18,19], description:"A proposal to reuse a former communications base as a data center and redirect waste heat to support a seed vault." },
+  { id:"unveil-memorial", name:"Unveil Memorial", ratio:"4/3", image:20, gallery:[20,21] }
 ];
 
 document.querySelector("#grid").innerHTML = projects.map((project, i) => `
@@ -185,7 +187,7 @@ document.querySelector("#grid").innerHTML = projects.map((project, i) => `
 
 document.querySelector("#projects").innerHTML = projects.map((project, i) => `
   <details id="${project.id}"><summary><span>[${String(i + 1).padStart(2, "0")}]</span><span>${project.name}</span></summary>
-  <div class="project-body"><p>${project.description || "Project materials to be added."}</p>
+  <div class="project-body">${project.description ? `<p>${project.description}</p>` : ""}
   ${!project.gallery ? "" : `<div class="plates">${project.gallery.map(n => `<img loading="lazy" src="${plates[n].src}" alt="${plates[n].alt}">`).join("")}</div>`}</div>
   </details>
 `).join("");
