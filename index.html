@@ -35,6 +35,7 @@ figure{margin:0}
 .tile{position:relative;display:block;overflow:hidden;background:var(--tone,#e0dfdc);aspect-ratio:var(--ratio,4/5)}
 .tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
 .tile[href="#layered-factory"] img{object-position:65% center}
+.tile[href="#drop-the-beat"] img{object-position:center bottom}
 .tile:hover img,.tile:focus-visible img{transform:scale(1.045)}
 .tile-word{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;background:rgba(0,0,0,.32);color:#fff;font:600 clamp(24px,4.5vw,72px)/1 Arial,sans-serif;letter-spacing:-.055em;opacity:0;transition:opacity 280ms ease-out}
 .tile-word span{transform:translateY(16px);transition:transform 280ms ease-out}
@@ -212,7 +213,7 @@ const projects = [
   { id:"charrette-section", name:"Charrette Section", coverWord:"SECTION", ratio:"1/1", image:62, gallery:[62], description:"A site plan and section trace how streets and buildings meet the changing terrain." },
   { id:"breathing-infra", name:"Breathing Infra", coverWord:"Breathing", ratio:"607/880", image:63, gallery:[63,64,65,66], description:"A Rhino model and physical prototypes document the development of the structural frame and its components." },
   { id:"voidscape", name:"VOIDSCAPE", coverWord:"DENSITY", ratio:"1/1", wideCover:true, image:71, gallery:[67,68,69], description:"Exhibited at the 2023 Seoul Biennale of Architecture and Urbanism, VOIDSCAPE uses unfolded axonometric drawings to study density and publicly accessible space in Tokyo’s Nihonbashi district." },
-  { id:"drop-the-beat", name:"Drop the Beat", coverWord:"RESPONSIVE", ratio:"3/4", image:72, gallery:[72,73] }
+  { id:"drop-the-beat", name:"Drop the Beat", coverWord:"RESPONSIVE", ratio:"607/880", image:72, gallery:[72,73] }
 ];
 
 const projectCount = String(projects.length).padStart(2, "0");
